@@ -19,6 +19,9 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: SSH_AUTHORIZED_KEY
+            value: "{{ .Values.ssh.authorized_keys }}"
         ports:
         - name: ssh
           containerPort: 22
