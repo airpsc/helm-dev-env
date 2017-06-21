@@ -1,0 +1,26 @@
+# Default values for dev-env.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: quay.io/andrewrothstein/docker-dev-env
+  tag: ubuntu_xenial
+  pullPolicy: IfNotPresent
+storage:
+  mntPath: /root/dev
+  pv:
+    hostPath: /c/Users/air/minikube-dev-vol
+    name: dev-vol
+    capacity: 50Gi
+  pvc:
+    name: dev-vol-claim
+    capacity: 25Gi
+service:
+  name: dev-env
+resources:
+  limits:
+    cpu: 4
+    memory: 8192Mi
+  requests:
+    cpu: 2
+    memory: 4096Mi

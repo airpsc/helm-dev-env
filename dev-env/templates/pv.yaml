@@ -1,0 +1,15 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Values.storage.pv.name }}
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.storage.pv.capacity }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.storage.pv.hostPath }}
