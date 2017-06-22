@@ -1,8 +1,9 @@
 * Launch with
 ```
-helm install --test dev-env --set ssh.authorized_key=$(cat ~/.ssh/id_rsa.pub)
+helm install --name=test dev-env --set ssh.authorized_key=$(cat ~/.ssh/id_rsa.pub)
 ```
-* SSH is your friend
+* SSH and its friends are your friends
 ```
-ssh -A root@$(minikube service --format "{{.IP}}" test-dev-env) -p $(minikube service --format "{{.Port}}" test-dev-env)
+alias test-ssh='ssh -A root@$(minikube service --format "{{.IP}}" test-dev-env) -p $(minikube service --format "{{.Port}}" test-dev-env)'
+alias test-sftp='sftp -P $(minikube service --format "{{.Port}}" test-dev-env) root@$(minikube service --format "{{.IP}}" test-dev-env)'
 ```

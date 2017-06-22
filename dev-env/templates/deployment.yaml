@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
   labels:
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
@@ -12,9 +12,9 @@ spec:
         app: {{ template "fullname" . }}
     spec:
       volumes:
-        - name: {{ .Values.storage.pvc.name }}
+        - name: dev-root
           persistentVolumeClaim:
-           claimName: {{ .Values.storage.pvc.name }}
+           claimName: {{ template "fullname" . }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -26,7 +26,7 @@ spec:
         - name: ssh
           containerPort: 22
         volumeMounts:
-        - mountPath: {{ .Values.storage.mntPath }}
-          name: {{ .Values.storage.pvc.name }}
+        - mountPath: {{ .Values.persistence.mntPath }}
+          name: dev-root
         resources:
 {{ toYaml .Values.resources | indent 10 }}
